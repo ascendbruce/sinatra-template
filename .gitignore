@@ -1,0 +1,12 @@
+db/*.db
+log/*
+.bundle
+
+coverage
+
+#config/database.rb
+#config/custom.rb
+
+#.rvmrc
+#.ruby-version
+#.ruby-gemset

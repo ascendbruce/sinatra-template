@@ -73,5 +73,5 @@
   Deploy it as regular rack/rails application. Just point root to /app/public and set RACK_ENV variable
 
 ## Author
-  Vladimir Penkin
-  Bruce Li
+  * Vladimir Penkin
+  * Bruce Li

@@ -5,6 +5,9 @@ require "active_record"
 require "uri"
 require "bundler/setup"
 require "logger"
+require "erb"
+
+include ERB::Util
 
 if development?
   require "sinatra/reloader"

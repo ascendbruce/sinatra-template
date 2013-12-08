@@ -12,7 +12,7 @@ helpers do
 
   def authorized?
     @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [HTTP_AUTH_USERNAME, HTTP_AUTH_PASSWORD]
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == [settings.http_auth_accounts.first[0], settings.http_auth_accounts.first[1]]
   end
 
   def in_groups_of(number, fill_with = nil)

@@ -1,37 +1,51 @@
 # Sinatra Template
 
 ## About
-  Sinatra Template with ActiveRecord, Migration, ERB and RSpec.
 
-  Folked from [shell/sinatra-template](https://github.com/shell/sinatra-template) and modified to fit my requiremant.
+Sinatra Template is an example sinatra application with ActiveRecord, Migration, Log4r, ERB. Suitable for simple, small web applications.
 
-  Original:
-  > Recently I found myself doing a very simple services for my cliens with Sinatra. There is a lot of guides, tutorials and FAQs around the internet. But it seems that there is no good Sinatra template with testing coverate, basic files structure, etc. So I made one.
+Sinatra Template was inspired by [shell/sinatra-template](https://github.com/shell/sinatra-template) by Vladimir Penkin.
 
-## App
-  * ActiveRecord ORM
-  * Mysql2
-  * ERB
-  * rake tasks for db management
-  * RSpec
-  * HTTP basic authentication
-  * Some essential Rails helpers
-  * Ready for deploy with passenger (_/config/setup\_load\_paths.rb_)
+## Including
 
-  You can switch environments with `RACK_ENV=test`
-  If you have old version of rake installed in gemset, you need to prepend all rake commands with `bundle exec`
+* ActiveRecord ORM
+* Mysql2
+* ERB
+* rake tasks for db management
+* Log4r
+* Bundler
+* HTTP basic authentication
+* Some Rails-like helpers
+* Ready for deploy with passenger (`/config/setup_load_paths.rb`)
 
-  Some prefer to extract controllers, models, helpers in corresponding folders and split them over files. It is a matter of taste, bit if you have a lot of files, consider using Rails instead.
+## Convensions
 
+### Model
 
-## Helpers
-  * link\_to - it is not full copy of Rails's link_to, this version produces only anchor tag with parameters
-  * in\_groups\_of - iteration over collection by groups
-  * options\_for\_select
+It does allow multi files. But it is not recommended. If you are going to build a complicated app. You should use Rails instead.
 
-## Rake
+### Settings
+
+Config Files:
+
+* config/database.yml (should be gitignored)
+* config/application.yml
+* config/confidential.yml (should be gitignored)
+* config/log4r.yml
+
+Note:
+
+* The value of `site_root_url` should not include the ending `/`
+
+### environments
+
+You can switch environments with `RACK_ENV=test`
+
+## available rake tasks
 
     rake -T
+
+will show:
 
     rake db:create_migration  # create an ActiveRecord migration
     rake db:migrate           # migrate the database (use version with VERSION=n)
@@ -44,34 +58,18 @@
 
     $ git clone https://github.com/ascendbruce/sinatra-template.git
     $ cd sinatra-template
-    # (you should create database by hand. and set config/database.yml correctly)
+    # cp config/database.yml.example database.yml # and edit it
+    # cp config/confidential.yml.example confidential.yml # and edit it
     $ rake db:migrate
     $ ruby application.rb
 
-## Testing
-  Testing suite include overall application behaviour(/spec/app_spec.rb) and model specific testing(products_spec.rb, categories_spec.rb).
-  Specific test include unit testing for model and actions tests for app
-
-  Do not forget to create and migrate testing database before:
-
-    $ RACK_ENV=test rake db:migrate
-
-  Run tests once
-
-    $ rspec spec/
-
-  Autotest friendly
-
-    $ ./autotest
-
-  Testing coverate generated with _SimpleCov_ flavor
-
-      $ open coverage/index.html
-
 ## Deploy
 
-  Deploy it as regular rack/rails application. Just point root to /app/public and set RACK_ENV variable
+Deploy it as regular rack application.
 
-## Author
-  * Vladimir Penkin
+## TODO
+
+* RSpec test
+
+## Contributors
   * Bruce Li

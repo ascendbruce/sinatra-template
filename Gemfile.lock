@@ -1,0 +1,63 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
+      builder (~> 3.0.0)
+    activerecord (3.2.14)
+      activemodel (= 3.2.14)
+      activesupport (= 3.2.14)
+      arel (~> 3.0.2)
+      tzinfo (~> 0.3.29)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
+      multi_json (~> 1.0)
+    arel (3.0.2)
+    awesome_print (1.2.0)
+    backports (3.3.4)
+    builder (3.0.4)
+    i18n (0.6.5)
+    log4r (1.1.10)
+    mini_portile (0.5.1)
+    multi_json (1.8.1)
+    mysql2 (0.3.13)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    rack (1.5.2)
+    rack-protection (1.5.0)
+      rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rake (10.1.0)
+    sinatra (1.4.3)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    sinatra-activerecord (1.2.3)
+      activerecord (>= 3.0)
+      sinatra (~> 1.0)
+    sinatra-contrib (1.4.1)
+      backports (>= 2.0)
+      multi_json
+      rack-protection
+      rack-test
+      sinatra (~> 1.4.0)
+      tilt (~> 1.3)
+    tilt (1.4.1)
+    tzinfo (0.3.37)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activerecord (~> 3.2.14)
+  activesupport (~> 3.2.14)
+  awesome_print
+  builder
+  log4r
+  mysql2
+  nokogiri
+  rake
+  sinatra
+  sinatra-activerecord
+  sinatra-contrib

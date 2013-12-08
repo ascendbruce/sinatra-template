@@ -1,12 +1,11 @@
 db/*.db
 log/*
+tmp/*
 .bundle
 
-coverage
+config/database.yml
+config/confidential.yml
 
-#config/database.rb
-#config/custom.rb
-
-#.rvmrc
-#.ruby-version
-#.ruby-gemset
+# .rvmrc
+# .ruby-version
+# .ruby-gemset

@@ -1,0 +1,6 @@
+<div class="small-12 columns">
+  <% @posts.each do |post| %>
+    <h3><a href="<%= settings.site_root_url %>/posts/<%= post.id %>"><%=h post.title %></a></h3>
+    <p><%=h post.body %></p>
+  <% end %>
+</div>

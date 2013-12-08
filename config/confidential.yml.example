@@ -1,0 +1,7 @@
+development: &default
+  http_auth_accounts:
+    admin: right_password
+test:
+  <<: *default
+production:
+  <<: *default

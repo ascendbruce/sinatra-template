@@ -1,0 +1,19 @@
+development: &default
+  # general
+  default_timezone: "Asia/Taipei"
+  site_root_url: http://localhost:4567
+  per_page: 10
+  # meta tags
+  meta_title: Example Blog
+  meta_description: Sinatra Template is like a tiny Rails
+  meta_keywords: "sinatra ruby rails blog"
+  meta_og_site_name: Example Blog
+  meta_og_url: http://example.com/sub_dir
+  meta_og_image: http://example.com/sub_dir/images/og_image.png
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  site_root_url: http://example.com/sub_dir

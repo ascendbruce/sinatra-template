@@ -1,65 +1,104 @@
-require "sinatra"
-require "sinatra/activerecord"
-require "sinatra/base"
-require "active_record"
-require "uri"
-require "bundler/setup"
-require "logger"
-require "erb"
+# encoding: utf-8
+
+require "rubygems"
+require "bundler"
+Bundler.require(:default)
+Bundler.require(:default, settings.environment)
+
+require "log4r/yamlconfigurator"
+include Log4r
 
 include ERB::Util
 
-if development?
+=begin
+#########  #########  ########## ##########   ##   ##      ##   #######   #########
+##         ##             ##         ##       ##   ####    ##  ##     ##  ##
+##         ##             ##         ##       ##   ## ##   ##  ##         ##
+#########  #########      ##         ##       ##   ##  ##  ##  ##   ####  #########
+       ##  ##             ##         ##       ##   ##   ## ##  ##     ##         ##
+       ##  ##             ##         ##       ##   ##    ####  ##     ##         ##
+#########  #########      ##         ##       ##   ##      ##   #######   #########
+=end
+
+set :root, File.expand_path(File.dirname(__FILE__))
+
+# Application Settings
+config_file "#{settings.root}/config/application.yml"
+config_file "#{settings.root}/config/confidential.yml"
+
+if settings.development?
   require "sinatra/reloader"
-  also_reload './helpers.rb'
-  Dir["./models/*.rb"].each {|file| also_reload file }
-  # also_reload './models.rb'
-  # also_reload '/path/to/some/file'
-  # dont_reload '/path/to/other/file'
+  also_reload "#{settings.root}/helpers.rb"
+  Dir["#{settings.root}/models/*.rb"].each { |file| also_reload file }
 end
 
-# App
-require "./helpers.rb"
-Dir["./models/*.rb"].each {|file| require file }
-require "./config/custom.rb"
+# Timezone
+ENV["TZ"] = settings.default_timezone
+ActiveRecord::Base.time_zone_aware_attributes = true
 
-RACK_ENV ||= ENV["RACK_ENV"] || "development"
+# Database
+dbconfig = YAML.load(File.read("config/database.yml")).with_indifferent_access
+set :database, dbconfig[settings.environment]
+ActiveRecord::Base.establish_connection dbconfig[settings.environment]
 
-dbconfig = YAML.load(File.read("config/database.yml"))
-set :database, dbconfig[RACK_ENV]
-ActiveRecord::Base.establish_connection dbconfig[RACK_ENV]
+# Logger
+Dir.mkdir("log") if !File.exists?("log") || !File.directory?("log")
+ActiveRecord::Base.logger = Logger.new(File.open("log/#{settings.environment}.log", "a+"))
 
-Dir.mkdir('log') if !File.exists?('log') || !File.directory?('log')
-ActiveRecord::Base.logger = Logger.new(File.open("log/#{RACK_ENV}.log", "a+"))
+Log4r::YamlConfigurator["HOME"] = "#{settings.root}/log"
+Log4r::YamlConfigurator.load_yaml_file "config/log4r.yml"
+set :logger, Log4r::Logger["info_logger"]
+
+# Models and Heplers (Models must go after DB connection)
+require "#{settings.root}/helpers.rb"
+Dir["#{settings.root}/models/*.rb"].each { |file| require file }
 
 ## app settings
 
 enable :sessions
 
-before '/admin/*' do
+=begin
+    ###      #######   #######
+   ## ##     ##    ##  ##    ##
+  ##   ##    ##    ##  ##    ##
+ #########   #######   #######
+##       ##  ##        ##
+##       ##  ##        ##
+=end
+
+before "/admin/*" do
   protected!
+end
+
+not_found do
+  erb :not_found
 end
 
 ## actions ##
 
-get '/' do
-  redirect to('/index')
+get "/" do # redirect / to /index can avoid link to wrong path if you are putting your app on a sub-path
+  redirect to("/index")
 end
 
-get '/index' do
-  @posts = Post.order("created_at DESC").limit(PER_PAGE)
-  erb :index
+get "/index" do
+  @posts = Post.published
+  erb :posts
 end
 
-get "/show/:id" do
-  if (@post = Post.find_by_id(params[:id]))
-    erb :show
+get "/posts" do
+  @posts = Post.published
+  erb :posts
+end
+
+get "/posts/:id" do
+  if @post = Post.find_by_id(params[:id])
+    erb :post
   else
-    redirect to('/')
+    status 404
   end
 end
 
-get "/admin/index" do
-  @posts = Post.order("created_at DESC").limit(PER_PAGE)
-  erb :index
+get "/posts.rss" do
+  @posts = Post.published
+  builder :posts
 end

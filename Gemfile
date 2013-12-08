@@ -1,23 +1,25 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
-gem 'rake'
-gem 'sinatra'
-gem 'activerecord', '~> 3.2.13'
-gem 'sinatra-activerecord'
+gem "rake"
+gem "sinatra"
+gem "activerecord", "~> 3.2.14"
+gem "activesupport", "~> 3.2.14"
+gem "sinatra-activerecord"
+gem "sinatra-contrib"
 
-gem "sinatra-reloader"
+gem "builder"
+gem "log4r"
 
+gem "mysql2"
+#gem "i18n"
 
-gem 'sqlite3'
-gem 'mysql2', '~> 0.3.11'
-gem 'i18n'
+gem "nokogiri", :require => false
 
 group :development, :test do
-  gem 'ruby-debug19'
-  gem 'rack-test'
-  gem 'rspec'
-  gem 'rspec-core'
-  gem 'autotest'
-  gem 'autotest-growl'
-  gem "simplecov"
+  gem "awesome_print"
+  # gem "sqlite3"
+  # gem "ruby-debug19"
+  # gem "rack-test", require: "rack/test"
+  # gem "rspec"
+  # gem "rspec-core"
 end

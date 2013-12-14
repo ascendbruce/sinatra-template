@@ -67,9 +67,5 @@ will show:
 
 Deploy it as regular rack application.
 
-## TODO
-
-* RSpec test
-
 ## Contributors
   * Bruce Li

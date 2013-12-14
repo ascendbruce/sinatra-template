@@ -17,9 +17,13 @@ gem "nokogiri", :require => false
 
 group :development, :test do
   gem "awesome_print"
-  # gem "sqlite3"
-  # gem "ruby-debug19"
-  # gem "rack-test", require: "rack/test"
+
   # gem "rspec"
   # gem "rspec-core"
+  # gem "fuubar"
+  # gem "ZenTest"
+  # gem "autotest-fsevent", "~> 0.2.9"
+
+  # gem "sqlite3"
+  # gem "ruby-debug19"
 end

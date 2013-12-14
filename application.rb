@@ -47,7 +47,7 @@ ActiveRecord::Base.logger = Logger.new(File.open("log/#{settings.environment}.lo
 
 Log4r::YamlConfigurator["HOME"] = "#{settings.root}/log"
 Log4r::YamlConfigurator.load_yaml_file "config/log4r.yml"
-set :logger, Log4r::Logger["info_logger"]
+set :logger, Log4r::Logger["app_logger"]
 
 # Models and Heplers (Models must go after DB connection)
 require "#{settings.root}/helpers.rb"
